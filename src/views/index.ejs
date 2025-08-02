@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SentEmail</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <% if (showLogin) { %>
+      <h1>Đăng nhập</h1>
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+      <form action="/auth/login" method="post">
+        <label for="username">Tài khoản:</label>
+        <input type="text" name="username" id="username" required />
+        <label for="password">Mật khẩu:</label>
+        <input type="password" name="password" id="password" required />
+        <button type="submit">Đăng nhập</button>
+      </form>
+    <% } else { %>
+      <h1>Gửi Email</h1>
+      <% if (message) { %>
+        <div class="success"><%= message %></div>
+      <% } %>
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+      <form action="/send" method="post">
+        <label for="to">Đến:</label>
+        <input type="email" name="to" id="to" required placeholder="recipient@example.com" />
+        <label for="subject">Tiêu đề:</label>
+        <input type="text" name="subject" id="subject" placeholder="Tiêu đề (tùy chọn)" />
+        <label for="text">Nội dung:</label>
+        <textarea name="text" id="text" required placeholder="Nội dung email"></textarea>
+        <button type="submit">Gửi</button>
+      </form>
+      <form action="/auth/logout" method="get" style="margin-top:20px;">
+        <button type="submit">Đăng xuất</button>
+      </form>
+    <% } %>
+  </div>
+</body>
+</html>
