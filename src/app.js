@@ -7,8 +7,21 @@ const authRoutes = require('./routes/auth');
 const session = require('express-session');
 
 
+
+const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Kết nối MongoDB Atlas
+const mongoUri = process.env.MONGODB_URI;
+console.log('Đang kết nối tới MongoDB Atlas:', mongoUri);
+mongoose.connect(mongoUri)
+  .then(() => {
+    console.log('Kết nối MongoDB Atlas thành công');
+  })
+  .catch((err) => {
+    console.error('Lỗi kết nối MongoDB Atlas:', err);
+  });
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

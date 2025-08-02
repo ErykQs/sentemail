@@ -1,18 +1,27 @@
 
-const users = [{ username: 'admin', password: '123456' }];
+const User = require('../models/User');
 
 exports.login = (req, res) => {
   res.render('index', { message: null, error: null, showLogin: true });
 };
 
-exports.handleLogin = (req, res) => {
+exports.handleLogin = async (req, res) => {
   const { username, password } = req.body;
-  const user = users.find(u => u.username === username && u.password === password);
-  if (user) {
-    req.session.user = user;
-    return res.redirect('/');
+  try {
+    console.log('[LOGIN QUERY]', { username, password });
+    const user = await User.findOne({ username: username, password: password });
+    console.log('[LOGIN QUERY RESULT]', user);
+    if (user) {
+      console.log(`[LOGIN SUCCESS] User: ${username}`);
+      req.session.user = { username: user.username };
+      return res.redirect('/');
+    }
+    console.log(`[LOGIN FAIL] User: ${username}`);
+    res.render('index', { message: null, error: 'Sai tài khoản hoặc mật khẩu.', showLogin: true });
+  } catch (err) {
+    console.log(`[LOGIN ERROR]`, err);
+    res.render('index', { message: null, error: 'Lỗi hệ thống.', showLogin: true });
   }
-  res.render('index', { message: null, error: 'Sai tài khoản hoặc mật khẩu.', showLogin: true });
 };
 
 exports.logout = (req, res) => {
