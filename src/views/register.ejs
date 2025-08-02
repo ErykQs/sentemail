@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Đăng ký tài khoản</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Đăng ký tài khoản mới</h1>
+    <% if (message) { %>
+      <div class="success"><%= message %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+    <form action="/register" method="post">
+      <label for="username">Tài khoản:</label>
+      <input type="text" name="username" id="username" required />
+      <label for="password">Mật khẩu:</label>
+      <input type="password" name="password" id="password" required />
+      <button type="submit">Đăng ký</button>
+    </form>
+    <div style="margin-top:20px;">
+      <a href="/auth/login">Quay lại đăng nhập</a>
+    </div>
+  </div>
+</body>
+</html>

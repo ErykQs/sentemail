@@ -4,6 +4,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const emailRoutes = require('./routes/email');
 const authRoutes = require('./routes/auth');
+const registerRoutes = require('./routes/register');
+const changePasswordRoutes = require('./routes/changePassword');
 const session = require('express-session');
 
 
@@ -36,6 +38,8 @@ app.use(session({
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/register', registerRoutes);
+app.use('/change-password', changePasswordRoutes);
 
 // Middleware kiểm tra đăng nhập
 function requireLogin(req, res, next) {
@@ -51,7 +55,8 @@ app.get('/', (req, res) => {
   res.render('index', {
     message: null,
     error: null,
-    showLogin: !loggedIn
+    showLogin: !loggedIn,
+    session: req.session
   });
 });
 
